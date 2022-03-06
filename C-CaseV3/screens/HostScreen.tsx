@@ -10,6 +10,7 @@ import { Image, TouchableOpacity} from 'react-native';;
 import { Button, Paragraph, Dialog, Portal, Provider,DefaultTheme } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 // import Form from 'react-native-form'
+import {userLoggedInAtTheMonent} from '../screens/LoginScreen'
 
 const UselessTextInput = (props) => {
   return (
@@ -21,7 +22,7 @@ const UselessTextInput = (props) => {
   );
 }
 
-export default function HostScreen() {
+export default function HostScreen({ navigation }: RootTabScreenProps<'Home'>) {
   const [visible, setVisible] = React.useState(false);
 
   const showDialog = () => setVisible(true);
@@ -32,13 +33,46 @@ export default function HostScreen() {
   const [email, onChangeEmail] = React.useState("");
   const [address, onChangeAddr] = React.useState('');
 
+  const checkLogIn = () => {
+    if (userLoggedInAtTheMonent.username != 'test') {
+      return(
+        <View>
+          <Paragraph>Thank you,{name} . You will receive a confirmation in your email ({email}).</Paragraph>
+          <Paragraph>Your address is: {address}</Paragraph>
+        </View>
+      );
+    } else {
+      return(
+        <View>
+          <Paragraph>Please log in.</Paragraph>
+        </View>
+      );
+    }
+  }
+
+  const checkEmptyText = () => {
+    if (name != '' && email != '' && address != '') {
+      return(
+        <View>
+          
+        </View>
+      );
+    } else {
+      return(
+        <View>
+          <Paragraph style={styles.text}>Please complete all boxes.</Paragraph>
+        </View>
+      );
+    }
+  }
+
   return (
       <View style={styles.container}>
         <Text style={styles.title}> </Text>
         <Emoji symbol="🏠" label="House"/>
         <Text style={styles.title}>Become a Host</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.text}>Want to Host?</Text>
+        <Text style={styles.text}>Offer a Place to Stay</Text>
         <View style={{ flexDirection:"row" }}>
           <FontAwesome name="check-circle" size={20} color="#3498db" />
           <Text style={styles.caption}> Provide a safe space for any time from a several days to a few weeks. </Text>
@@ -48,6 +82,8 @@ export default function HostScreen() {
           <Text style={styles.caption}> Provide local connections to refugees. </Text>
         </View>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        
+        {checkEmptyText()}
         <View style={{ flexDirection:"row" }}>
           <Text style={styles.caption}>Full Name: </Text>
             <TextInput
@@ -79,29 +115,39 @@ export default function HostScreen() {
             style={styles.textInput}
           />
         </View>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
         <Provider>
           <View>
-            <Button onPress={showDialog}> Submit </Button>
+            <Button theme={theme} onPress={ 
+              showDialog}> Submit </Button>
             <Portal>
               <Dialog visible={visible} onDismiss={hideDialog}>
                 <Dialog.Content>
-                  <Paragraph>Thank you, you will receive a confirmation in your email</Paragraph>
+                  {checkLogIn()}
                 </Dialog.Content>
                 <Dialog.Actions>
-                  <Button onPress={hideDialog}>Done</Button>
+                  <Button theme={theme} onPress={hideDialog}>Done</Button>
                 </Dialog.Actions>
               </Dialog>
             </Portal>
           </View>
         </Provider>
-{/*        
-        <TouchableOpacity onPress={() => navigation.navigate('Accomodation')} style={styles.button}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity> */}
+
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.link}>
+            <Text style={styles.linkText}>or login here</Text>
+          </TouchableOpacity>
+        </View>
+      
+      
       </View>
   );
 }
+
+const picIcon = {
+  uri: "https://bootdey.com/img/Content/avatar/avatar6.png"
+}; 
 
 // class NameForm extends React.Component {
 //   constructor(props) {
@@ -184,6 +230,14 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 15,
     color: '#fff',
+  },
+  link: {
+    marginTop: 15,
+    paddingVertical: 15,
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#2e78b7',
   },
 });
 

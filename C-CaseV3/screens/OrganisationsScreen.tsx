@@ -26,14 +26,14 @@ const DATA = [
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f93",
     title: "GlobalGiving",
     info: "",
-    description: "",
+    description: "GlobalGiving is a nonprofit that connects \ndonors with grassroots projects around the world.",
     url: "https://www.globalgiving.org/",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d82",
     title: "Caritas Ukraine",
     info: "",
-    description: "Provides food, clothing and other humanitarian needs to people in Ukraine",
+    description: "Provides food, clothing and other \nhumanitarian needs to people in Ukraine",
     url: "https://www.caritas.eu/caritas-ukraine/",
   },
   {
@@ -100,10 +100,9 @@ const ScrollScreenView = () => {
         <Emoji symbol="☮️" label="Peace"/>
         <Text style={styles.title}>Organisations</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.text}>Here you can find the latest offers of accomodation including further details.</Text>
-        <Text style={styles.text}>Click on the posts below to find out more.</Text>
+        <Text style={styles.text}>Here you can find more information and contact details for organisations proving humanitarian support for the Ukrainian refugees.</Text>
+        <Text style={styles.text}>Click on the links below to find out more.</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        
       </View>
 
       <FlatList

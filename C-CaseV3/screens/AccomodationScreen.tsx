@@ -4,10 +4,14 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import Emoji from '../components/Emoji';
 import React, { useState } from "react";
-import { Alert, FlatList, SafeAreaView, Modal, Pressable } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph, DefaultTheme } from 'react-native-paper';
+import { Alert, FlatList, SafeAreaView, Modal, Pressable, TextInput } from "react-native";
+import { Avatar, Button, Card, Title, Paragraph, DefaultTheme, Dialog, Portal, Provider } from 'react-native-paper';
+import { Image, TouchableOpacity} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 export default function AccomodationScreen() {
+
   return (
     <ScrollScreenView/>
   );
@@ -90,7 +94,19 @@ const Item = ({ item, onPress, curr_post }) => (
 const ScrollScreenView = () => {
 const [selectedId, setSelectedId] = useState(null);
 const [modalVisible, setModalVisible] = useState(false);
+const [modalVisible2, setModalVisible2] = useState(false);
 
+const [visible, setVisible] = React.useState(false);
+
+const showDialog = () => setVisible(true);
+
+const hideDialog = () => setVisible(false);
+
+const [name, onChangeName] = React.useState("");
+const [email, onChangeEmail] = React.useState("");
+const [date, onChangeDate] = React.useState('');
+const [month, onChangeMonth] = React.useState('');
+const [year, onChangeYear] = React.useState('');
 
    const renderItem = ({ item }) => {
      return (
@@ -109,7 +125,7 @@ const [modalVisible, setModalVisible] = useState(false);
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert("Details pop up screen has been closed.");
+            console.log("Details pop up screen has been closed.");
             setModalVisible(!modalVisible);
           }}
         >
@@ -127,15 +143,143 @@ const [modalVisible, setModalVisible] = useState(false);
                 </Card>  
                   
               
+              <View style={{ flexDirection:"row" }}>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={styles.textStyle}>Hide Details</Text>
               </Pressable>
+              <View
+               style={{
+               padding: 10,
+               //borderColor: 'transparent',
+               }}
+        />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible2(!modalVisible2)}
+              >
+                <Text style={styles.textStyle}>Make Booking</Text>
+              </Pressable> 
+              </View>
+
             </View>
           </View>
         </Modal>
+        
+        <Modal
+        animationType="fade"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            Alert.alert("The booking screen has been closed");
+            setModalVisible2(!modalVisible2);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+            <Text style={styles.title}>Please fill in this form</Text>
+           
+
+          <View style={{ flexDirection:"row" }}>
+          <Text style={styles.caption}>Full Name: </Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Full Name"
+              maxLength={20}
+              value={name}
+              onChangeText={onChangeName}
+            />
+        </View>
+        <View style={{ flexDirection:"row" }}>
+          <Text style={styles.caption}>  Email: </Text>
+          <View
+            style={{
+            borderLeftWidth: 3,
+            borderLeftColor: 'white',
+            }}
+          />
+          <TextInput
+              style={styles.textInput}
+              placeholder="Email"
+              maxLength={20}
+              value={email}
+              onChangeText={onChangeEmail}
+          />
+        </View>
+        <View style={{ flexDirection:"row" }}>
+          <Text style={styles.caption}>  Date of arrival at <Paragraph>{DATA[curr_post].title}</Paragraph></Text>
+          <View
+            style={{
+            borderLeftWidth: 5,
+            borderLeftColor: 'white',
+            }}
+          />
+          <TextInput
+              style={styles.dateInput}
+              placeholder="DD"
+              maxLength={2}
+              value={date}
+              onChangeText={onChangeDate}
+          />
+          <View
+            style={{
+            borderLeftWidth: 5,
+            borderLeftColor: 'white',
+            }}
+          />
+          <TextInput
+              style={styles.dateInput}
+              placeholder="MM"
+              maxLength={2}
+              value={month}
+              onChangeText={onChangeMonth}
+          />
+          <View
+            style={{
+            borderLeftWidth: 5,
+            borderLeftColor: 'white',
+            }}
+          />
+          <TextInput
+              style={styles.dateInput}
+              placeholder="YYYY"
+              maxLength={4}
+              value={year}
+              onChangeText={onChangeYear}
+          />
+          <View
+            style={{
+            borderLeftWidth: 3,
+            borderLeftColor: 'white',
+            }}
+          />
+          </View>
+          <View style={{ flexDirection:"row" }}>
+          <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {setModalVisible2(!modalVisible2); setModalVisible(!modalVisible)}}
+              >
+                <Text style={styles.textStyle}>Make Booking</Text>
+            </Pressable>
+            <View
+            style={{
+            borderLeftWidth: 5,
+            borderLeftColor: 'white',
+            }}
+            />
+            <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {setModalVisible2(!modalVisible2); setModalVisible(!modalVisible)}}
+              >
+                <Text style={styles.textStyle}>Exit Booking</Text>
+            </Pressable>
+            </View>
+          </View>
+          </View>
+        </Modal>
+
 
       <View style={styles.container}>
         <Text style={styles.title}> </Text>
@@ -225,7 +369,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
     elevation: 2
   },
@@ -243,6 +387,19 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  }, 
+  caption: {
+    fontSize: 15,
+    padding: 4,
+  }, 
+  textInput: {
+    fontSize: 15,
+    padding: 2,
+  },
+  dateInput: {
+    fontSize: 15,
+    padding: 2,
+    width: 50,
   }
   
 });

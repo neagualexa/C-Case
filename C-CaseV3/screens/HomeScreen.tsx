@@ -12,6 +12,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
       <Emoji symbol='🇺🇦' label="Flag: Ukraine"/>
+      {/* <LogoImage /> */}
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       <Text style={styles.title}>Ukraine Humanitarian Support</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.text}>The Ukrainian people are undergoing a horrible tragedy.</Text>

@@ -35,7 +35,7 @@ const DATA = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "UN Refugee Agency",
-    description: "Filippo Grandi, High Commissioner for Refugees, said the UN Refugee Agency is working \n with the authorities, UN and other partners in Ukraine and is ready \n to provide humanitarian assistance wherever necessary and possible.",
+    description: "Filippo Grandi, High Commissioner for Refugees, \nsaid the UN Refugee Agency is working \n with the authorities, UN and other partners in Ukraine and is ready \n to provide humanitarian assistance wherever necessary and possible.",
     url: "https://donate.unrefugees.org.uk/",
   },
   {

@@ -18,7 +18,7 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145571e39d83",
     title: "Ukrinform",
-    info: "",
+    info: "Ukrinform brings the latest news, daily news, political news,\n business news, social news, cultural news, sports news.",
     description: "",
     url: "https://www.ukrinform.net/",
     logo: "https://logowik.com/content/uploads/images/ukrinform3979.jpg",
@@ -26,7 +26,7 @@ const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb39ba",
     title: "BBC News",
-    info: "",
+    info: "Visit BBC News for up-to-the-minute news, \nbreaking news, video, audio and feature stories.",
     description: "",
     url: "https://www.bbc.co.uk/news/world-60525350",
     logo: "https://static.wikia.nocookie.net/bbc/images/f/f1/BBC_News_channel_logo.png/revision/latest?cb=20210516184723",
@@ -34,7 +34,7 @@ const DATA = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97g93",
     title: "CNN",
-    info: "",
+    info: "Find the latest breaking news and information \non the top stories, weather, \nbusiness, entertainment, politics, and more.",
     description: "",
     url: "https://edition.cnn.com/2022/02/14/world/gallery/ukraine-russia-crisis/index.html",
     logo: "http://assets.stickpng.com/thumbs/5842ab75a6515b1e0ad75b0b.png",
@@ -42,7 +42,7 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145571f29d82",
     title: "The Guardian",
-    info: "",
+    info: "Latest news, sport, business, comment, analysis and reviews \nfrom the Guardian, the world's leading liberal voice.",
     description: "",
     url: "https://www.theguardian.com/world/live/2022/mar/05/russia-ukraine-war-latest-news-nato-gives-green-light-to-bombing-with-lack-of-no-fly-zone-says-zelenskiy?filterKeyEvents=false&page=with:block-6223e6488f0872dfc8c96bba",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/The_Guardian_2018.svg/2560px-The_Guardian_2018.svg.png",
@@ -50,7 +50,7 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145572e29d84",
     title: "Romania Insider",
-    info: "",
+    info: "The most reliable media source for articles \nin English dedicated to Romania: latest news in business, \npolitics and society, feature stories on business.",
     description: "",
     url: "https://www.romania-insider.com/ro-red-cross-ukraine-aid-mar-2022",
     logo: "https://cdn.romania-insider.com/cdn/ff/pLk4rqBvyr8iCGuOdsPeksaU4jvOBUjbSVBi5hg5cMA/1643904565/public/2022-02/ri_logo.png",
@@ -58,7 +58,7 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145572e29d85",
     title: "TVN24 Poland",
-    info: "",
+    info: "Czytaj najnowsze informacje i oglądaj \nwideo w portalu informacyjnym TVN24!",
     description: "",
     url: "https://tvn24.pl/tvn24-news-in-english",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Tvn24_Logo.svg/1200px-Tvn24_Logo.svg.png",
@@ -71,7 +71,7 @@ const Item = ({ item, onPress}) => (
 <Card style={{marginBottom:20, marginHorizontal:10}}>
   <Card.Title title={item.title} subtitle=" " left={LeftContent} />
   <Card.Content>
-    {/* <Paragraph>{item.description}</Paragraph> */}
+    <Paragraph>{item.info}</Paragraph> 
   </Card.Content>
   {/* <Card.Cover source={item.url} /> */}
   <Card.Actions>

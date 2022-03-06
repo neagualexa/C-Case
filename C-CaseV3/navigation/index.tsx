@@ -9,7 +9,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet, Text } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,10 +21,12 @@ import AccomodationScreen from '../screens/AccomodationScreen';
 import OrganisationsScreen from '../screens/OrganisationsScreen';
 import DonationsScreen from '../screens/DonationsScreen';
 import HostScreen from '../screens/HostScreen';
+import LogInScreen from '../screens/LoginScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 import LogoImage from '../components/LogoImage';
+import {userLoggedInAtTheMonent} from '../screens/LoginScreen'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -50,6 +52,9 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="About" component={ModalScreen} />
       </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name="Login" component={LogInScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -62,6 +67,13 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+
+  const ShowloggedUser = () => {
+    if(userLoggedInAtTheMonent.username != 'test')
+        return(<Text style={{fontSize: 15, fontWeight: 'bold', textDecorationLine: 'underline', padding: 5}}>Logged In as: {userLoggedInAtTheMonent.username}</Text>);  
+    else 
+        return(<Text style={{fontSize: 15, fontWeight: 'bold', textDecorationLine: 'underline', padding: 5}}>Not logged in</Text>);
+  }
 
   return (
     <BottomTab.Navigator
@@ -77,6 +89,7 @@ function BottomTabNavigator() {
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="star" color={color} />,
           headerLeft: () => (
+            <View>
             <Pressable
               onPress={() => navigation.navigate('Home')}
               style={({ pressed }) => ({
@@ -84,9 +97,24 @@ function BottomTabNavigator() {
               })}>
                 <LogoImage />
             </Pressable>
+            </View>
           ),
 
           headerRight: () => (
+            <View style={{flexDirection:'row'}}>
+              {ShowloggedUser()}
+            <Pressable
+              onPress={() => navigation.navigate('Login')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome5
+                name="user"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
             <Pressable
               onPress={() => navigation.navigate('About')}
               style={({ pressed }) => ({
@@ -99,6 +127,7 @@ function BottomTabNavigator() {
                 style={{ marginRight: 15 }}
               />
             </Pressable>
+          </View>
           ),
         })}
       />
@@ -173,22 +202,36 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Host"
+        name='Host'
         component={HostScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Host',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerLeft: () => (
             <Pressable
-            onPress={() => navigation.navigate('Home')}
-            style={({ pressed }) => ({
-              opacity: pressed ? 0.5 : 1,
-            })}>
-              <LogoImage />
-          </Pressable>
+              onPress={() => navigation.navigate('Home')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+                <LogoImage />
+            </Pressable>
           ),
-        })
-        }
+
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Login')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome5
+                name="user"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
     
