@@ -5,7 +5,7 @@ import { Text, View } from '../components/Themed';
 import Emoji from '../components/Emoji';
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, Linking, StatusBar, TouchableOpacity, Alert } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Button, Card, Title, Paragraph, DefaultTheme } from 'react-native-paper';
 
 export default function NewsScreen() {
   return (
@@ -16,55 +16,67 @@ export default function NewsScreen() {
 
 const DATA = [
   {
+    id: "58694a0f-3da1-471f-bd96-145571e39d83",
+    title: "Ukrinform",
+    info: "",
+    description: "",
+    url: "https://www.ukrinform.net/",
+    logo: "https://logowik.com/content/uploads/images/ukrinform3979.jpg",
+  },
+  {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb39ba",
     title: "BBC News",
     info: "",
-    description: " ",
+    description: "",
     url: "https://www.bbc.co.uk/news/world-60525350",
+    logo: "https://static.wikia.nocookie.net/bbc/images/f/f1/BBC_News_channel_logo.png/revision/latest?cb=20210516184723",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97g93",
-    title: "",
+    title: "CNN",
     info: "",
     description: "",
-    url: "",
+    url: "https://edition.cnn.com/2022/02/14/world/gallery/ukraine-russia-crisis/index.html",
+    logo: "http://assets.stickpng.com/thumbs/5842ab75a6515b1e0ad75b0b.png",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145571f29d82",
-    title: "",
+    title: "The Guardian",
     info: "",
     description: "",
-    url: "",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e39d83",
-    title: "",
-    info: "",
-    description: "",
-    url: "",
+    url: "https://www.theguardian.com/world/live/2022/mar/05/russia-ukraine-war-latest-news-nato-gives-green-light-to-bombing-with-lack-of-no-fly-zone-says-zelenskiy?filterKeyEvents=false&page=with:block-6223e6488f0872dfc8c96bba",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/The_Guardian_2018.svg/2560px-The_Guardian_2018.svg.png",
   },
   {
     id: "58694a0f-3da1-471f-bd96-145572e29d84",
-    title: "",
+    title: "Romania Insider",
     info: "",
     description: "",
-    url: "",
+    url: "https://www.romania-insider.com/ro-red-cross-ukraine-aid-mar-2022",
+    logo: "https://cdn.romania-insider.com/cdn/ff/pLk4rqBvyr8iCGuOdsPeksaU4jvOBUjbSVBi5hg5cMA/1643904565/public/2022-02/ri_logo.png",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145572e29d85",
+    title: "TVN24 Poland",
+    info: "",
+    description: "",
+    url: "https://tvn24.pl/tvn24-news-in-english",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Tvn24_Logo.svg/1200px-Tvn24_Logo.svg.png",
   },
 ];
 
+const LeftContent = props => <Avatar.Icon {...props} theme={theme} color='#f1c40f' icon="newspaper"/>
 
-const LeftContent = props => <Avatar.Icon {...props} icon="heart" />
-
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-<Card style={{marginBottom:20}}>
+const Item = ({ item, onPress}) => (
+<Card style={{marginBottom:20, marginHorizontal:10}}>
   <Card.Title title={item.title} subtitle=" " left={LeftContent} />
   <Card.Content>
-    <Paragraph>{item.description}</Paragraph>
+    {/* <Paragraph>{item.description}</Paragraph> */}
   </Card.Content>
   {/* <Card.Cover source={item.url} /> */}
   <Card.Actions>
     {/* //<Button>Cancel</Button> */}
-    <Button onPress={() => {
+    <Button theme={theme} onPress={() => {
       window.open(item.url, '_blank');
     }}> Official Link </Button>
   </Card.Actions> 
@@ -82,14 +94,10 @@ const ScrollScreenView = () => {
   const [selectedId, setSelectedId] = useState(null);
 
     const renderItem = ({ item }) => {
-      const backgroundColor = item.id === selectedId ? "#badfff" : "#d9edff";
-      const color = item.id === selectedId ? 'white' : 'black';
       return (
         <Item
           item={item}
         onPress={() => setSelectedId(item.id)}
-        backgroundColor={{backgroundColor}} 
-        textColor={{ color }}
       />
     );
   };
@@ -98,8 +106,10 @@ const ScrollScreenView = () => {
     <SafeAreaView style={styles.scroll_container}>
 
       <View style={styles.container}>
+      <Text style={styles.title}> </Text>
         <Emoji symbol="📰" label="Newspaper"/>
         <Text style={styles.title}>Latest Updates</Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <Text style={styles.text}>This page provides updates about the latest situation regarding support for Ukraine.</Text>
         <Text style={styles.text}>Particular details about organisations providing support and how and where you can donate items can be found in the tabs below.</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
@@ -111,6 +121,9 @@ const ScrollScreenView = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
+        numColumns={3}
+        horizontal={false}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
@@ -118,14 +131,16 @@ const ScrollScreenView = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 5,
+    width: window.innerWidth,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom:10,
   },
   scroll_container: {
     flex:1,
     marginLeft: 30,
     marginRight: 30,
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
@@ -157,3 +172,12 @@ const styles = StyleSheet.create({
   
 });
 
+const theme = {
+   ...DefaultTheme,
+    roundness: 2, 
+    colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#f1c40f',
+    },
+};

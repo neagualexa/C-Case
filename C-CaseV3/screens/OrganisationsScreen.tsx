@@ -5,7 +5,7 @@ import { Text, View } from '../components/Themed';
 import Emoji from '../components/Emoji';
 import { useState, useCallback } from "react";
 import { FlatList, SafeAreaView, Linking, StatusBar, TouchableOpacity, Alert } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Button, Card, Title, Paragraph,Surface, DefaultTheme } from 'react-native-paper';
 
 export default function OrganisationsScreen() {
   return (
@@ -53,22 +53,22 @@ const DATA = [
 ];
 
 
-const LeftContent = props => <Avatar.Icon {...props} icon="heart" />
+const LeftContent = props => <Avatar.Icon {...props} theme={theme} color='#f1c40f' icon="heart" />
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-<Card style={{marginBottom:20}}>
-  <Card.Title title={item.title} subtitle=" " left={LeftContent} />
-  <Card.Content>
-    <Paragraph>{item.description}</Paragraph>
-  </Card.Content>
-  {/* <Card.Cover source={item.url} /> */}
-  <Card.Actions>
-    {/* //<Button>Cancel</Button> */}
-    <Button onPress={() => {
-      window.open(item.url, '_blank');
-    }}> Official Link </Button>
-  </Card.Actions> 
-</Card>
+const Item = ({ item, onPress }) => (
+  <Card style={{marginBottom:20, marginHorizontal:10}}>
+    <Card.Title title={item.title} subtitle=" " left={LeftContent} />
+    <Card.Content>
+      <Paragraph>{item.description}</Paragraph>
+    </Card.Content>
+    {/* <Card.Cover source={item.url} /> */}
+    <Card.Actions>
+      {/* //<Button>Cancel</Button> */}
+      <Button theme={theme} onPress={() => {
+        window.open(item.url, '_blank');
+      }}> Official Link </Button>
+    </Card.Actions> 
+  </Card>
 );
 
 //DEBUG original ITEM
@@ -82,15 +82,13 @@ const ScrollScreenView = () => {
   const [selectedId, setSelectedId] = useState(null);
 
     const renderItem = ({ item }) => {
-      const backgroundColor = item.id === selectedId ? "#badfff" : "#d9edff";
-      const color = item.id === selectedId ? 'white' : 'black';
       return (
+        
         <Item
           item={item}
         onPress={() => setSelectedId(item.id)}
-        backgroundColor={{backgroundColor}} 
-        textColor={{ color }}
-      />
+        />
+        
     );
   };
 
@@ -98,8 +96,10 @@ const ScrollScreenView = () => {
     <SafeAreaView style={styles.scroll_container}>
 
       <View style={styles.container}>
+      <Text style={styles.title}> </Text>
         <Emoji symbol="☮️" label="Peace"/>
         <Text style={styles.title}>Organisations</Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <Text style={styles.text}>Here you can find the latest offers of accomodation including further details.</Text>
         <Text style={styles.text}>Click on the posts below to find out more.</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
@@ -111,6 +111,9 @@ const ScrollScreenView = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
+        numColumns={3}
+        horizontal={false}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
@@ -118,14 +121,15 @@ const ScrollScreenView = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 5,
+    width: window.innerWidth,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom:10,
   },
   scroll_container: {
-    flex:1,
     marginLeft: 30,
     marginRight: 30,
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
@@ -153,6 +157,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 10,
     padding: 0
-  }
+  },
   
 });
+
+const theme = {
+  ...DefaultTheme,
+   roundness: 2, 
+   colors: {
+   ...DefaultTheme.colors,
+   primary: '#3498db',
+   accent: '#f1c40f',
+   },
+};
