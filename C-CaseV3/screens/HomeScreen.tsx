@@ -11,17 +11,17 @@ import { DefaultTheme } from 'react-native-paper';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
-      <Emoji symbol='🇺🇦' label="Flag: Ukraine"/>
-      {/* <LogoImage /> */}
-      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      {/* <Emoji symbol='🇺🇦' label="Flag: Ukraine"/> */}
+      <LogoImage />
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.title}>Ukraine Humanitarian Support</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.text}>The Ukrainian people are undergoing a horrible tragedy.</Text>
       <Text style={styles.text}>It is our goal and duty to help and supply them with all the humanitarian support and compassion we can.</Text>
       <Text style={styles.text}>We aim to provide them with temporary accommodation with anyone willing to welcome them into their home.</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <LogoImage />
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      {/* <LogoImage /> */}
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       <View style={{ flexDirection:"row" }}>
         <TouchableOpacity onPress={() => navigation.navigate('Accomodation')} style={styles.button}>
           <Text style={styles.buttonText}>Search for Rooms</Text>

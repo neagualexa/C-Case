@@ -100,7 +100,7 @@ export default function LogInScreen() {
           loggedInState = 0;
           Alert.alert("You've logged out");
           userLoggedInAtTheMonent={
-            username: '',
+            username: 'test',
             password: '',
             details:  '',
             location: '',
